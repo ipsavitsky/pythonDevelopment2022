@@ -11,7 +11,8 @@ def bullscows(guess: str, secret: str) -> tuple[int, int]:
 def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
     secret = choice(words)
     while (curword := ask('Введите слово: ', words)) != secret:
-        inform('Быки: {}, Коровы: {}', *bullscows(curword, secret))
+        bulls, cows = bullscows(curword, secret)
+        inform('Быки: {}, Коровы: {}', bulls, cows)
     # what to do here?!?!?
     print(123)
 
