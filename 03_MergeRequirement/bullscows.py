@@ -17,8 +17,15 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
 
 
 def ask(prompt: str, valid: list[str] = None) -> str:
-    pass
+    # TODO: rewrite to walrus?
+    input_word = input(prompt)
+    while True:
+        if valid is not None and input_word not in valid:
+            input_word = input(prompt)
+        else:
+            break    
+    return input_word
 
 
 def inform(format_string: str, bulls: int, cows: int) -> None:
-    pass
+    print(format_string.format(bulls, cows))
