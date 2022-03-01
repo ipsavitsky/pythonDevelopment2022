@@ -1,17 +1,15 @@
+from bullscows import gameplay
 import urllib.request
 from sys import argv
 
-from bullscows import gameplay
 
 
 def ask(prompt: str, valid: list[str] = None) -> str:
     # TODO: rewrite to walrus?
     input_word = input(prompt)
-    while True:
-        if valid is not None and input_word not in valid:
-            input_word = input(prompt)
-        else:
-            break
+    if valid is not None:
+        while input_word not in valid:
+            input_word = input('Нет в словаре такого слова! ' + prompt)
     return input_word
 
 
@@ -24,8 +22,7 @@ if len(argv) == 3:
 elif len(argv) == 2:
     dict_url, words_len = argv[-1], 5
 else:
-    # TODO: what is this exception
-    raise Exception()
+    raise Exception('incorrect number of arguments!')
 
 if dict_url.startswith('https://'):
     with urllib.request.urlopen(dict_url) as opened_url:
@@ -34,6 +31,7 @@ else:
     with open(dict_url, 'r') as opened_file:
         words_dict = opened_file.read().split()
 
-lengthed_words = list(filter(lambda x: len(x) == 5, words_dict))
+lengthed_words = list(filter(lambda x: len(x) == words_len, words_dict))
 
-gameplay(ask, inform, lengthed_words)
+score = gameplay(ask, inform, lengthed_words)
+print()

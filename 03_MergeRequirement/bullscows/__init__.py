@@ -10,11 +10,13 @@ def bullscows(guess: str, secret: str) -> tuple[int, int]:
 
 def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
     secret = choice(words)
+    turns = 0
+    print(secret)
     while (curword := ask('Введите слово: ', words)) != secret:
         bulls, cows = bullscows(curword, secret)
         inform('Быки: {}, Коровы: {}', bulls, cows)
-    # what to do here?!?!?
-    print(123)
+        turns += 1
+    return turns
 
 
 
