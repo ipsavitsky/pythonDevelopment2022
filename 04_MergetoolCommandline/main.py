@@ -9,7 +9,7 @@ class NameGenerator(cmd.Cmd):
     current_language: str = LANGUAGE.NATIVE
 
     def do_language(self, args):
-        match args[0]:
+        match args:
             case 'RU':
                 self.current_language = LANGUAGE.RU
             case 'EN':
@@ -18,9 +18,9 @@ class NameGenerator(cmd.Cmd):
                 self.current_language = LANGUAGE.NATIVE
 
     def do_generate(self, args):
+        # print(self.current_language)
         arguments = shlex.split(args)
         i = importlib.import_module('pynames.generators.'+arguments[0])
-        # generator_objects = [s for s in dir(i) if s.endswith('NamesGenerator')]
         match arguments:
             case ['iron_kingdoms', _]:
                 generator_object = arguments[1] + 'FullnameGenerator'
