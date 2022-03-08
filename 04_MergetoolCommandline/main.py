@@ -1,3 +1,4 @@
+from distutils.log import info
 import readline
 import shlex
 import cmd
@@ -64,6 +65,23 @@ class NameGenerator(cmd.Cmd):
                     cls = eval(f'i.{object_name}')()
                     print(f'class {object_name} has {cls.get_names_number()} names')
 
+    
+    def complete_language(self, prefix, line, start_index, end_index):
+        # print(prefix.upper())
+        return [s for s in ('RU', 'EN', 'NATIVE') if s.startswith(prefix.upper())]
+
+    def complete_info(self, prefix, line, start_index, end_index):
+        return [s for s in ('language', 'male', 'female') if s.startswith(prefix)]
+
+
+    def complete_generate(self, prefix, line, start_index, end_index):
+        match shlex.split(line):
+            case ['generate', 'elven', _]:
+                return [s for s in ('Warhammer', 'DnD') if s.startswith(prefix)]
+            case ['generate', 'iron_kigdoms', _]:
+                pass
+            case ['generate', _, _]:
+                return [s for s in ('male', 'female') if s.startswith(prefix)]
 
 
 if __name__ == '__main__':
